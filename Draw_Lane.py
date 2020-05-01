@@ -44,14 +44,14 @@ def draw_line_pro(coeffs1, coeffs2, M, frame):
               coeffs2['c']
 
     # Draw the lines (one red, one blue)
-    cv2.polylines(mask, [np.int32(np.stack((plot_y, left_x), axis=1))], False, (255, 0, 0), 20)
-    cv2.polylines(mask, [np.int32(np.stack((plot_y, right_x), axis=1))], False, (0, 0, 255), 20)
+    cv2.polylines(mask, [np.int32(np.stack((left_x,plot_y), axis=1))], False, (255, 0, 0), 20)
+    cv2.polylines(mask, [np.int32(np.stack((right_x, plot_y), axis=1))], False, (0, 0, 255), 20)
 
     # Warp the perspective
     mask = cv2.warpPerspective(mask, np.float32(M), (width, height))  # Warp back to original image space
 
     # Add the lines to the original frame
-    img = cv2.addWeighted(frame, 1., mask, 0.3, 0)
+    img = cv2.addWeighted(frame, 1., mask, 0.5, 0)
 
     return img
     # x = np.arange(0, height)
